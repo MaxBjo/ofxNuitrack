@@ -47,8 +47,13 @@ namespace ofxnui {
 		void setHandCallback(function<void(nuitrack::HandTrackerData::Ptr)> onHand);
 		void unbindHandCallback();
 
-		void setSkeletonCallback(function<void(nuitrack::SkeletonData::Ptr)> onSkeleton);
-		void unbindSkeletonCallback();
+        void setSkeletonCallback(function<void(nuitrack::SkeletonData::Ptr)> onSkeleton);
+        void unbindSkeletonCallback();
+        
+        void setGestureCallback(function<void(nuitrack::GestureData::Ptr)> ofGesture);
+        void unbindGestureCallback();
+        
+        
 
 		// Vector3 -> vec3
 		static glm::vec3 fromVector3(nuitrack::Vector3 v) {
@@ -73,7 +78,8 @@ namespace ofxnui {
 		uint64_t onDepthHandle;
 		uint64_t onUserHandle;
 		uint64_t onHandHandle;
-		uint64_t onSkeletonHandle;
+        uint64_t onSkeletonHandle;
+        uint64_t onGestureHandle;
 
 	public:
 		nuitrack::ColorSensor::Ptr rgbTracker;
@@ -81,5 +87,6 @@ namespace ofxnui {
 		nuitrack::UserTracker::Ptr userTracker;
 		nuitrack::HandTracker::Ptr handTracker;
 		nuitrack::SkeletonTracker::Ptr skeletonTracker;
+        nuitrack::GestureRecognizer::Ptr gestureRecognizer;
 	};
 }

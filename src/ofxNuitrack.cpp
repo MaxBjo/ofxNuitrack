@@ -58,6 +58,7 @@ namespace ofxnui {
 			if (userTracker) nuitrack::Nuitrack::update(userTracker);
 			if (handTracker) nuitrack::Nuitrack::update(handTracker);
 			if (skeletonTracker) nuitrack::Nuitrack::update(skeletonTracker);
+            if (gestureRecognizer) nuitrack::Nuitrack::update(gestureRecognizer);
 		}
 		catch (const nuitrack::Exception& e)
 		{
@@ -92,14 +93,14 @@ namespace ofxnui {
 
 		return invalidUser;
 	}
-
+    
 	void Tracker::setIssuesCallback(function<void(nuitrack::IssuesData::Ptr)> onIssues)
 	{
 		if (onIssuesHandle) {
-		//	unbindIssuesCallback();
+			unbindIssuesCallback();
 		}
-
-		//onIssuesHandle = nuitrack::Nuitrack::connectOnIssuesUpdate(onIssues);
+        
+		onIssuesHandle = nuitrack::Nuitrack::connectOnIssuesUpdate(onIssues);
 	}
 
 	void Tracker::unbindIssuesCallback()
@@ -109,6 +110,7 @@ namespace ofxnui {
 		}
 
 		//nuitrack::Nuitrack::disconnectOnIssuesUpdate(onIssuesHandle);
+        nuitrack::Nuitrack::disconnectOnIssuesUpdate(onIssuesHandle);
 		onIssuesHandle = 0;
 	}
 
@@ -222,4 +224,23 @@ namespace ofxnui {
 
 		onSkeletonHandle = 0;
 	}
+
+    void Tracker::setGestureCallback(function<void (nuitrack::GestureData::Ptr)> ofGesture){
+        if (onGestureHandle){
+            unbindGestureCallback();
+        }
+        
+        if(!onGestureHandle){
+            gestureRecognizer = nuitrack::GestureRecognizer::create();
+        }
+        
+        onGestureHandle = gestureRecognizer->connectOnNewGestures(ofGesture);
+    }
+
+    void Tracker::unbindGestureCallback(){
+        if (onGestureHandle){
+            gestureRecognizer->disconnectOnUpdate(onGestureHandle);
+        }
+    }
+
 }
