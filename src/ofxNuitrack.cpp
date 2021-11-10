@@ -97,10 +97,10 @@ namespace ofxnui {
 	void Tracker::setIssuesCallback(function<void(nuitrack::IssuesData::Ptr)> onIssues)
 	{
 		if (onIssuesHandle) {
-			unbindIssuesCallback();
+		//	unbindIssuesCallback();
 		}
         
-		onIssuesHandle = nuitrack::Nuitrack::connectOnIssuesUpdate(onIssues);
+		//onIssuesHandle = nuitrack::Nuitrack::connectOnIssuesUpdate(onIssues);
 	}
 
 	void Tracker::unbindIssuesCallback()
@@ -110,7 +110,7 @@ namespace ofxnui {
 		}
 
 		//nuitrack::Nuitrack::disconnectOnIssuesUpdate(onIssuesHandle);
-        nuitrack::Nuitrack::disconnectOnIssuesUpdate(onIssuesHandle);
+    //    nuitrack::Nuitrack::disconnectOnIssuesUpdate(onIssuesHandle);
 		onIssuesHandle = 0;
 	}
 
